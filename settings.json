@@ -3,6 +3,7 @@
     "projects": {
         "vast": {
             "niceName": "VastRP",
+            "new": "true",
             "links": {
                 "vk": "https://vk.com/rusvastrp",
                 "discord": "https://discord.gg/B9MF4heaga"
@@ -19,8 +20,7 @@
                     "map": "rp_bangclaw.png",
                     "ip": "212.22.93.206:27017"
                 }
-            ],
-            new: "true"
+            ]
         },
         "umbrella": {
             "niceName": "UmbrellaRP",
