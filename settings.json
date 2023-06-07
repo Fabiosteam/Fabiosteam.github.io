@@ -3,7 +3,7 @@
     "projects": {
         "vast": {
             "niceName": "VastRP",
-            "new": "true",
+            "new": true,
             "links": {
                 "vk": "https://vk.com/rusvastrp",
                 "discord": "https://discord.gg/B9MF4heaga"
