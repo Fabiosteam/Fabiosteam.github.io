@@ -1,0 +1,86 @@
+{
+    "banner": "https://muviproject.net/img/banner.png",
+    "projects": {
+        "vast": {
+            "niceName": "VastRP",
+            "links": {
+                "vk": "https://vk.com/rusvastrp",
+                "discord": "https://discord.gg/B9MF4heaga"
+            },
+            "logo": "https://muviproject.net/img/logo/vastrp.png",
+            "servers": [
+                {
+                    "name": "▃▆█ VastRP #1 | НАБОР | M9K █▆▃",
+                    "map": "rp_bangclaw.png",
+                    "ip": "212.22.93.206:27015"
+                },
+                {
+                    "name": "▆▇█ VastRP #2 | НАБОР | M9K █▇▆",
+                    "map": "rp_bangclaw.png",
+                    "ip": "212.22.93.206:27017"
+                }
+            ],
+            new: "true"
+        },
+        "umbrella": {
+            "niceName": "UmbrellaRP",
+            "links": {
+                "vk": "https://vk.com/rusumb",
+                "discord": "https://discord.gg/rusumbrp"
+            },
+            "logo": "https://muviproject.net/img/logo/umbrellarp.png",
+            "servers": [
+                {
+                    "name": "▆▇█ UmbrellaRP#1┃АМБРЕЛЛА┃БАНДЫ █▇",
+                    "map": "rp_bangclaw.png",
+                    "ip": "212.22.93.35:27016"
+                },
+                {
+                    "name": "▆▇█ UmbrellaRP#2┃АМБРЕЛЛА┃БАНДЫ █▇",
+                    "map": "rp_bangclaw.png",
+                    "ip": "212.22.93.35:27015"
+                }
+            ]
+        },
+        "infinit": {
+            "niceName": "InfinityRP",
+            "links": {
+                "vk": "https://vk.com/infrp.gmod",
+                "discord": "https://discord.gg/q72TWCUdGh"
+            },
+            "logo": "https://muviproject.net/img/logo/infinityrp.png",
+            "servers": [
+                {
+                    "name": "▆▇█ InfinityRP #1 ┃БАНДЫ┃FPS┃M9K █▇▆",
+                    "map": "rp_bangclaw.png",
+                    "ip": "212.22.93.109:27015"
+                }
+            ]
+        },
+        "magic": {
+            "niceName": "MagicRP",
+            "links": {
+                "vk": "https://vk.com/magicdrp",
+                "discord": "https://discord.gg/ypSxrFW"
+            },
+            "logo": "https://muviproject.net/img/logo/magicrp.png",
+            "servers": [
+                {
+                    "name": "▆▇█ MagicRP#1 ┃ FREE VIP ┃ БАНДЫ █▇▆",
+                    "map": "rp_bangclaw.png",
+                    "ip": "212.22.93.178:27016"
+                },
+                {
+                    "name": "▆▇█ MagicRP#2 ┃ БОНУСЫ ┃ БАНДЫ █▇▆",
+                    "map": "rp_bangclaw.png",
+                    "ip": "212.22.93.116:27016"
+                },
+                {
+                    "name": "▆▇█ MagicRP#3 ┃ FREE VIP ┃ БАНДЫ █▇▆",
+                    "map": "rp_bangclaw.png",
+                    "ip": "212.22.93.60:27016"
+                },
+            ]
+        }
+    }
+}
