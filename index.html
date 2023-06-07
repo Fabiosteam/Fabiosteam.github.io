@@ -1,0 +1,173 @@
+<html>
+<head>
+
+	<title>Garry's Mod Main Menu</title>
+
+	<!-- <link href="//db.onlinewebfonts.com/c/5795a47e252d16c82bb79fa354b224db?family=VK+Sans+Display" rel="stylesheet" type="text/css"/> -->
+	<link rel="stylesheet" type="text/css" href="css/menu/Menu.css" />
+	<link rel="stylesheet" type="text/css" href="css/menu/NavBar.css" />
+	<link rel="stylesheet" type="text/css" href="css/menu/PageOptions.css" />
+	<link rel="stylesheet" type="text/css" href="css/menu/NewGame.css" />
+	<link rel="stylesheet" type="text/css" href="css/menu/Servers.css" />
+	<link rel="stylesheet" type="text/css" href="css/Workshop.css" />
+
+	<script type="text/javascript" src="js/lua.js"></script>
+
+	<script type="text/javascript" src="js/thirdparty/jquery.js"></script>
+	<script type="text/javascript" src="js/thirdparty/jquery-color.js"></script>
+	<script type="text/javascript" src="js/thirdparty/angular.js"></script>
+	<script type="text/javascript" src="js/thirdparty/angular-ui.js"></script>
+
+	<script type="text/javascript" src="js/menu/WorkshopFiles.js"></script>
+	<script type="text/javascript" src="js/menu/Subscriptions.js"></script>
+	<script type="text/javascript" src="js/menu/menuApp.js?2"></script>
+	<script type="text/javascript" src="js/menu/control.Menu.js?2"></script>
+	<script type="text/javascript" src="js/menu/control.Main.js?2"></script>
+	<script type="text/javascript" src="js/menu/control.NewGame.js"></script>
+	<script type="text/javascript" src="js/menu/control.Servers.js"></script>
+	<script type="text/javascript" src="js/menu/control.Addons.js"></script>
+	<script type="text/javascript" src="js/menu/control.Demos.js"></script>
+	<script type="text/javascript" src="js/menu/control.Saves.js"></script>
+	<script type="text/javascript" src="js/menu/control.Dupes.js"></script>
+
+	<script type="text/javascript" src="js/svc.Tranny.js"></script>
+
+	<script type="text/javascript" src="js/menu/TestData.js"></script>
+	<script type="text/javascript" src="js/menu/TestServers.js"></script>
+	<script type="text/javascript" src="js/menu/TestWorkshop.js"></script>
+
+</head>
+
+<body ng-app="MenuApp" ng-controller="MenuController" id="body" style="background-image: {{IfElse(!InGame,'url(https://media.discordapp.net/attachments/927647432370683984/1112113269474328626/image.png?width=1080&height=608)','none')}}">
+
+<div id="version" ng-click="ShowNews()" ng-show="Branch"><span ng-show="Branch != 'unknown'"></span>{{Version}}<span ng-show="Branch != 'unknown'"></span></div>
+
+<div ng-view>
+
+</div>
+
+<div id="NavBar">
+
+	<ul class="left">
+		<li class="smallicon hidelabel" ng-click="ToggleGamemodes()"><img ng-src='img/lamp.png'><span>{{GamemodeTitle}}</span></li>
+		<li class="smallicon" ng-click="ToggleLanguage()"><img  ng-src='resource/localization/{{Language}}.png'></li>
+		<li class="smallicon hidelabel" ng-click="ToggleGames()"><img ng-src='img/Game.png'><span ng-Tranny="'games'"></span></li>
+		<li class="smallicon hidelabel" style="overflow: visible;" ng-click="ToggleProblems()"><img ng-src='img/Danger.png'>
+			<span ng-Tranny="'problems'"></span>
+			<number ng-show="ProblemCount > 0" class="{{IfElse( ProblemSeverity > 0, 'severity' + ProblemSeverity, '' )}}">{{ProblemCount}}</number>
+		</li>
+		<li class="smallicon hidelabel" ng-show="ShowBack"><a style="display: flex; flex-direction: row ; align-items: center; gap: 16px;" href="#/"><img src='img/back_to_main_menu.png'><span ng-Tranny="'back_to_main_menu'" ></span></a></li>
+	</ul>
+</div>
+
+<ul class="gamemode_list popup">
+	<li ng-repeat="gm in Gamemodes|filter:{menusystem:true}|orderBy:'name'" ng-click="SelectGamemode( gm )">
+		<img ng-src='../gamemodes/{{gm.name}}/icon24.png'><span>{{gm.title}}</span>
+	</li>
+
+</ul>
+
+<ul class="language_list popup">
+	<li  ng-repeat="lang in Languages" ng-click="SelectLanguage( lang )">
+		<img ng-src='resource/localization/{{lang}}.png'>
+	</li>
+</ul>
+
+<ul class="servermenu popup">
+
+	<div class="server_menu">
+
+		<div class="server_menu_header">
+			<img id="serverLogo" style="width: 128px;height: 128px;border-radius: 50%;margin: 25px 0px 0px 25px;" id="logo" src="server.logo">
+
+			<div>
+				<span id="nicename" style="font-size: 36px;color: #FFA800;">{{SelectedServer.niceName}}</span><span style="font-size: 16px;color: #FFFFFF;">Играет {{SumOnline(SelectedServer)}} игроков</span>
+			</div>
+
+			<div style="flex-direction: row;gap:25px">
+				<img ng-click="OpenBrowser(SelectedServer.links.vk)" id="mvk" src='Code by quiz#9689'>
+				<img ng-click="OpenBrowser(SelectedServer.links.discord)" id="mds" src='img/ds.png'>
+			</div>
+		</div>
+
+		<div class="server_menu_center">
+			<div class="server_menu_item" ng-repeat="server in SelectedServer.servers">
+				<span style="font-size: 18px;color: #FFA800;margin-left: 35px;">{{server.name}}</span>
+
+				<div class="server_menu_item_right">
+					<span style="font-size: 13px;color: #FFFFFF;">Игроки {{server.players}} из 127</span>
+
+					<img src='img/online.png' ng-show="server.online">
+
+					<a class="server_menu_item_connect" ng-click="ConnectServer(server.ip)">
+						Играть
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<a class="close_menu" ng-click="ToggleServers()">
+			ЗАКРЫТЬ МЕНЮ
+		</a>
+	</div>
+
+</ul>
+
+<ul class="games_list popup">
+
+	<li class="notowned"><img src='img/notowned.png' width="16" height="16"> <span ng-Tranny="'game_not_owned'"></span></li>
+	<li class="notinstalled"><img src='img/notinstalled.png' width="16" height="16"> <span ng-Tranny="'game_not_installed'"></span></li>
+	<li></li>
+	<li ng-repeat="game in Games|orderBy:'title'" class="{{IfElse( !game.owned, 'notowned', '' )}} {{IfElse( !game.installed, 'notinstalled', '' )}}">
+		<input type=checkbox ng-model="game.mounted" ng-show="game.installed" ng-change="GameMountChanged( game )"/>
+		<img src='img/notowned.png' ng-show="!game.owned" width="16" height="16">
+		<img src='img/notinstalled.png' ng-show="game.owned && !game.installed" width="16" height="16">
+
+		<span>{{game.title}}</span>
+	</li>
+
+</ul>
+
+<ul class="kinect_settings popup">
+
+	<li>
+		<div>
+
+			<p>
+				<label style="display: block">
+					<input type="checkbox" ng-model="kinect.show_color" ng-change="kinect.update()">  <span ng-Tranny="'motionsensor.showcolor'"></span>
+				</label>
+			</p>
+
+
+			<div ng-show="kinect.show_color">
+
+				<span ng-Tranny="'motionsensor.colorpos'"></span>
+
+				<p style="margin-left: 5px;">
+					<label ng-repeat="option in kinect.color_options" style="display: block">
+						<input type="radio" name="kinect.color" ng-model="kinect.color" value="{{option}}" ng-change="kinect.update()">
+						<span ng-Tranny="'motionsensor.showcolor.'+ option"></span>
+					</label>
+				</p>
+			</div>
+
+			<div  ng-show="kinect.show_color">
+				<span ng-Tranny="'motionsensor.colorsize'"></span>
+
+				<p style="margin-left: 5px;">
+					<label ng-repeat="option in kinect.size_options" style="display: block">
+						<input type="radio" name="kinect.color_size" ng-model="kinect.color_size" value="{{option}}" ng-change="kinect.update()">
+						<span ng-Tranny="'motionsensor.colorsize.'+ option"></span>
+					</label>
+				</p>
+			</div>
+
+		</div>
+
+	</li>
+
+</ul>
+
+</body>
+</html>

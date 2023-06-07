@@ -1,0 +1,92 @@
+
+	<div class="page" ng-controller="ControllerMain">
+
+		<div class="options" id="options">
+
+			<div class="title">
+				<font color="#FFA800">MUVI </font> <font color="white">Mod</font>
+			</div>	
+
+			<ul class="menu">
+
+				<!-- <li>&nbsp;</li> -->
+				<li ng-show="InGame"><a ng-click="BackToGame()" ng-Tranny="'resume_game'"></a></li>
+				<li ng-show="InGame">&nbsp;</li>
+				<li><img ng-src='img/Subtract.png'><a ng-href="#/newgame/" ng-Tranny="'new_game'"></a></li>
+
+				<li style="margin-bottom: 2vh;"><img ng-src='img/Category.png'><a ng-href="#/servers/" ng-Tranny="'find_mp_game'"></a></li>
+
+				<!-- <li>&nbsp;</li> -->
+				<li style="margin-bottom: 2vh;"><img ng-src='img/setting.png'><a ng-click="MenuOption( this, 'OpenOptionsDialog')" ng-Tranny="'options'" ></a></li>
+
+				<!-- <li>&nbsp;</li> -->
+				<li><img ng-src='img/Folder_fill.png'><a ng-href="#/addons/" ng-Tranny="'addons'"></a></li>
+				<li><img ng-src='img/Union.png'><a ng-href="#/dupes/" ng-Tranny="'dupes'"></a></li>
+				<li><img ng-src='img/Save_fill.png'><a ng-href="#/saves/" ng-Tranny="'saves'"></a></li>
+				<li style="margin-bottom: 2vh;"><img ng-src='img/Video_file_fill.png'><a ng-href="#/demos/" ng-Tranny="'demos'"></a></li>
+<!-- 
+				<li>&nbsp;</li> -->
+				<li ng-show="InGame" style="margin-bottom: 2vh;">
+					<a ng-click="MenuOption( this, 'engine disconnect');" ng-Tranny="'disconnect'"></a>
+				</li>
+				<li><img ng-src='img/Sign_in_squre_fill.png'><a ng-click="MenuOption( this, 'Quit')" ng-Tranny="'quit'"></a></li>
+
+			</ul>
+
+		</div>
+
+		<div class="news" ng-hide="NewsList.length == 0">
+			<div class='news_buttons'>
+				
+				<div class="{{IfElse( NewsItem.Url == CurrentNewsItem.Url, 'selected', '' )}} {{NewsItemClass( NewsItem )}}" ng-repeat="NewsItem in NewsList | orderBy: 'Date' : true" ng-click="SelectItem(NewsItem)"></div>
+			</div>
+			
+			<div class="news_item" style="{{NewsItemBackground( CurrentNewsItem.HeaderImage )}}" ng-hide="HideNews">
+				<div>
+					<span ng-click="OpenInSteam( CurrentNewsItem.Url )">{{CurrentNewsItem.Title}}</span>
+					<font>{{CurrentNewsItem.SummaryHtml}}</font>
+				</div>
+			</div>
+			
+			<div class='server_buttons'>
+				<!--<div ng-click="ToggleNewsList()" ng-hide="HideNews || AnyNewNewsItems"><img src="../materials/icon16/cross.png"></div> !-->
+				<div class='server_item' ng-repeat="(projectId, project) in InfoProject.projects" ng-value="{{$index}}">
+					<div style="max-width: fit-content; min-width: fit-content;">
+						<img ng-src="{{project.logo}}">
+					</div>
+
+					<div >
+						<div class="server_divider"></div>
+					</div>
+
+					<div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+						<div class="server_title">
+							<span style="font-style: normal;font-weight: 600;font-size: 21px;line-height: 26px;color: #FFA800;">{{project.niceName}}</span>
+							<div class="new" ng-show="project.new">NEW</div>
+							<div class="sale" ng-show="project.sale">X2 SALE</div>
+						</div>
+						<!-- <br> -->
+						<span style="font-style: normal;font-weight: 500;font-size: 16px;line-height: 20px;color: #FFFFFF;">Играет {{SumOnline(project)}} игроков</span>
+					</div>
+
+					<div>
+						<a ng-click="ToggleServers(projectId)" href="">
+							<img src="img/playbtn.png" style="height: 28px; width: 28px;">
+						</a>
+					</div>
+				</div>
+
+
+			</div>
+
+			<!--<div class='sale_banner'>
+				<div ng-click="ToggleNewsList()" ng-hide="HideNews || AnyNewNewsItems"><img src="../materials/icon16/cross.png"></div>
+				<div>
+					<span ng-click="OpenInSteam( CurrentNewsItem.Url )">{{CurrentNewsItem.Title}}</span>
+					<font>{{CurrentNewsItem.SummaryHtml}}</font>
+				</div>
+			</div>!-->
+
+		</div>
+
+	</div>

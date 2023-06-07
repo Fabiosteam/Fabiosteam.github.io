@@ -1,0 +1,268 @@
+
+	<div class="page" style="display: flex; flex-direction: row; " ng-controller="ControllerServers">
+
+		<div class="options"style="margin:0;">
+
+			<ul id="servers_menu">
+
+				<li style="opacity: 1;  margin-left: 0;">
+					<h1 ng-tranny="'server_list'" style="font-weight: 700;font-size: 64px;color: #FFFFFF;"></h1>
+				</li>
+				<li style="opacity: 1; margin-left: 0;">
+					<div ng-click="TopServera()" class="btn_topservera {{IfElse( TopServers, 'active', '' )}}" >
+						<!-- <div class="back"></div> -->
+						<span>Топ серверов</span>
+					</div>
+				</li>
+
+
+				<li style="margin-top: 5vh;" class="{{IfElse( ServerType == 'internet', 'active', '' )}}"><div class=" {{IfElse( ServerType == 'internet', 'active', '' )}}"></div><img ng-src="img/internet.png"><a class="{{IfElse( ServerType == 'internet', 'active', '' )}}" ng-tranny="'servers_internet'" ng-click="SwitchType( 'internet' )"></a></li>
+				<li class="{{IfElse( ServerType == 'favorite', 'active', '' )}}"><div class=" {{IfElse( ServerType == 'favorite', 'active', '' )}}"></div><img ng-src="img/favorite.png"><a class="{{IfElse( ServerType == 'favorite', 'active', '' )}}" ng-tranny="'servers_favorites'" ng-click="SwitchType( 'favorite' )"></a></li>
+				<li class="{{IfElse( ServerType == 'history', 'active', '' )}}"><div class=" {{IfElse( ServerType == 'history', 'active', '' )}}"></div><img ng-src="img/history.png"><a class="{{IfElse( ServerType == 'history', 'active', '' )}}" ng-tranny="'servers_history'" ng-click="SwitchType( 'history' )"></a></li>
+				<li class="{{IfElse( ServerType == 'lan', 'active', '' )}}"><div class=" {{IfElse( ServerType == 'lan', 'active', '' )}}"></div><img ng-src="img/local.png"><a class="{{IfElse( ServerType == 'lan', 'active', '' )}}" ng-tranny="'servers_local'" ng-click="SwitchType( 'lan' )"></a></li>
+			
+
+				<li style="margin-top: 2vh;" ng-hide="CurrentGamemode != null || Refreshing[ ServerType ] == 'true'"><img ng-src="img/Refresh.png"><a ng-tranny="'servers_refresh'" ng-click="Refresh()">refresh</a></li>
+				<li style="margin-top: 2vh;" ng-hide="Refreshing[ ServerType ] == 'false'"><img ng-src="img/Refresh.png"><a ng-tranny="'servers_stoprefresh'" ng-click="DoStopRefresh()">Stop refresh</a></li>
+
+
+				<li style="margin-top: 2vh;"><img ng-src="img/Discovery.png"><a ng-click="MenuOption( this, 'OpenServerBrowser')" ng-Tranny="'legacy_browser'"></a></li>
+			</ul>
+
+		</div>
+
+		
+		<div class="filter" ng-hide="!!TopServers" style="margin: 0 10px 0 3vw;">
+			<h1 class="menuheader">
+				<img style="margin-right: 7px;" src='img/info.png'/>
+				<span>Фильтры</span>
+			</h1>
+
+			<div class="sb_filters" ng-hide="CurrentGamemode != null">
+				<div>
+					<input type="radio" class="radiobtn" id="radiobtn1" name=gmsort" value="-(order)" ng-model="GMSort" required checked="checked"/>	
+					<label for="radiobtn1" ng-Tranny="'gmsort_name'"></label>	
+				</div>
+
+				<div>
+					<input type="radio" class="radiobtn" id="radiobtn2" name=gmsort" value="-(num_servers)" ng-model="GMSort"/>
+					<label for="radiobtn2" ng-Tranny="'gmsort_name'"></label>
+				</div>
+				<div>
+					<input type="radio" class="radiobtn" id="radiobtn3" name=gmsort" value="info.title" ng-model="GMSort"/>
+					<label for="radiobtn3" ng-Tranny="'gmsort_name'"></label>
+				</div>
+
+				<div></div>
+
+				<div ng-repeat="cat in GMCats" style="display: flex; justify-content: space-between; align-items: center;">
+					<input type="checkbox" class="radiobtn" id="gmfltr_hide_{{cat}}" onclick="SwitchFilter( '{{cat}}', this )"/><label for="gmfltr_hide_{{cat}}" ng-Tranny="'gmfltr_hide_' + cat"></label>
+					<img class="gmfilter_rev" src="img/remove.png" onclick="ReverseFilter( '{{cat}}', this )" />
+				</div>
+				<input style="width: 100%;" type="text" ng-model="GMSearch" class="gm_search" ng-Tranny="'gmsearch_placeholder'" />
+			</div>
+
+
+
+			<div class="sb_filters" ng-show="CurrentGamemode != null">
+				<!-- <input ng-model="SVFilterPlyMin" type="number" class="smalltextbox" placeholder="0`"/>
+				<input ng-model="SVFilterPlyMax" type="number" class="smalltextbox" placeholder="128"/>
+				<input ng-model="SVFilterMaxPing" type="number" class="smalltextbox" placeholder="2000"/> -->
+				
+				<div>
+					<input type="checkbox" ng-model="SVFilterNotFull" class="radiobtn" id="check1"/>
+					<label for="check1" ng-Tranny="'svfltr_not_full'"></label>
+				</div>
+
+				<div>
+					<input type="checkbox" ng-model="SVFilterHasPly" class="radiobtn" id="check2"/>
+					<label for="check2" ng-Tranny="'svfltr_has_players'"></label>
+				</div>
+
+				<div>
+					<input type="checkbox" ng-model="SVFilterHidePass" class="radiobtn" id="check3"/>
+					<label for="check3" ng-Tranny="'svfltr_no_password'"></label> <img class="passworded" src='img/server-passworded.png'/>
+				</div>
+				
+				
+				<!-- <div class="flags_filter" ng-show="CurrentGamemode.hasflags">
+					<img ng-repeat="(flag, whatever) in CurrentGamemode.flags" class="flag {{FilterFlagClass( flag )}}" src='asset://garrysmod/materials/flags16/{{flag}}.png' ng-click="FilterFlag( flag, this );" onerror="MissingFlag( this )"/>
+				</div> -->
+			</div>
+		</div>
+
+		<div class="" ng-hide="CurrentGamemode != null || TopServers == true">
+
+			<h1 class="menuheader">
+				<img style="margin-right: 7px;" src='img/info.png'/>
+				<span>Выберите режим игры из списка ниже</span>
+			</h1>
+
+			<div class='server_gamemodes whiterounded scrollable' style="position: inherit;">
+
+				<div class='gamemode {{gamemode.element_class}}' ng-repeat="gamemode in GamemodeList | filter: gamemodeFilter | orderBy:[GMSort, '-(num_players)', 'name' ]" ng-click="SelectGamemode( gamemode )">
+
+					<!-- <embed src="img/umbrella_logo1.0 (1).svg" style="scale:0.005;" type="image/svg+xml" width="35" height="35" /> !-->
+					<img src='img/gamemode.png' onerror="MissingGamemodeIcon( this )"/>
+
+
+					<div style="display: flex;flex-direction: column-reverse;justify-content: center;">
+						<div class='stats'>{{gamemode.num_players}} <span ng-tranny="gamemode.num_players == 1 && 'servers_player_on' || 'servers_players_on'"></span> {{gamemode.num_servers}} <span ng-tranny="gamemode.num_servers == 1 && 'servers_server' || 'servers_servers'"></span></div>
+						<div class='name'>
+							{{GamemodeName(gamemode)}}<tag ng-show="gamemode.info && gamemode.info.tag" ng-Tranny="'gmfltr_hide_' + gamemode.info.tag">{{gamemode.info.tag}}</tag>
+						</div>
+					</div>
+
+					<span class='installgamemode' ng-show="ShouldShowInstall( gamemode )" ng-click="InstallGamemode( gamemode );$event.stopPropagation()">&nbsp;</span>
+
+				</div>
+
+			</div>
+
+		</div>
+		
+
+		<div class="" ng-show="CurrentGamemode != null && TopServers == null">
+
+
+			<h1 class="menuheader" >
+				<a class='bglink' ng-click="SelectGamemode(null)"><img style="filter: invert(72%) sepia(45%) saturate(3818%) hue-rotate(358deg) brightness(103%) contrast(105%);" src='img/left.png' /></a>
+				<span style="white-space: nowrap;font-size: 19px;color: #FFA800;	padding: 5px;background: rgba(0, 0, 0, 0.24);border-radius: 3px;">{{GamemodeName(CurrentGamemode)}}</span>
+				
+				<img style="margin-left: 21px;" src='img/info.png'/>
+				<small ng-tranny="'join_a_server'"></small>
+
+				<input style="width: 270px;" type="text" ng-model="CurrentGamemode.Search" class="searchbox" ng-Tranny="'svsearch_placeholder'" />
+			</h1>
+
+			<!--<div class='controls' style='position: absolute; left: 0; right: 0; margin-top: 5px;'>
+				<input type="text" ng-model="CurrentGamemode.Search" class="searchbox" ng-Tranny="'svsearch_placeholder'" />
+			</div>!-->
+
+			<div class='serverlist' style="position: relative;">
+
+				<div class='header'>
+
+					<p ng-click="ChangeOrder( CurrentGamemode, 'name' )" ng-tranny="'server_name_header'" class="name"></p>
+					<!-- <div class="right"> -->
+						<p ng-click="ChangeOrder( CurrentGamemode, 'map' )" ng-tranny="'server_mapname'" class="map"></p>
+						<p ng-click="ChangeOrder( CurrentGamemode, '-players' )" ng-tranny="'server_players'" class="players"></p>
+
+						<p ng-click="ChangeOrder( CurrentGamemode, 'ping' )" ng-tranny="'server_ping'" class="ping"></p>
+						<p ng-click="ChangeOrder( CurrentGamemode, 'recommended' )" ng-tranny="'server_ranking'" class="rank"></p>
+					<!-- </div> -->
+				</div>
+
+				<div class='body scrollable' onscroll="UpdateInfiniteScroll( this );">
+
+					<div id="placeholder_pre" style="height: {{CurrentGamemode.server_offset * 64}}px"></div>
+
+					<div ng-repeat="server in CurrentGamemode.servers | orderBy: CurrentGamemode.OrderBy : CurrentGamemode.OrderReverse | filter: serverFilter | startFrom : CurrentGamemode.server_offset | limitTo : ServersPerPage"
+						class="server {{ ServerClass( server ) }} {{IfElse( CurrentGamemode.Selected == server, 'activeserver', '' )}}" ng-mouseup="SelectServer( server, $event )" style="display: flex; padding-left: 16px; padding-right: 16px;" >
+
+						<p class="name">
+							<a class='favbutton {{IfElse( server.favorite, "favorited", "" )}}' ng-click="ToggleFavorite( server );$event.stopPropagation();"></a>
+							<img class="flag" src='asset://garrysmod/materials/flags16/{{server.flag}}.png' onerror="MissingFlag( this )" ng-show="server.flag"/>
+							<img class="passworded" src='img/server-passworded.png' ng-show="server.pass"/>
+							<span>{{server.name}}
+								<!-- <tag class="{{IfElse( server.version_c > 0, 'future', '' )}}" ng-show="server.version_c != 0">{{IfElse( server.version_c > 0, 'Invalid version', 'Outdated' )}}: {{server.version}}</tag> -->
+							</span>
+						</p>
+						<p class="map">{{server.map}}</p>
+						<p class="players">{{server.players}} / {{server.maxplayers}}</p>
+						<p class="ping">{{server.ping}}</p>
+						<p class="rate">
+							<img src="asset://garrysmod/lua/menu/muvi/html/img/star_active.png" ng-repeat="rate in getNumber(ServerRankInt(server))" alt="">
+							<img src="asset://garrysmod/lua/menu/muvi/html/img/star.png" ng-repeat="rate in getNumber(5-ServerRankInt(server))" alt="">
+						</p>
+					</div>
+
+					<div id="placeholder_post" style="height: {{(CurrentGamemode.servers.length - ServersPerPage - CurrentGamemode.server_offset) * 64}}px"></div>
+
+				</div>
+
+			</div>
+
+			<div class='serverinfo' ng-show="CurrentGamemode.Selected" >
+				<div class='serverinfo_menu'> <!-- отсылка на вэндсдей -->
+
+					<header>
+						<name>{{CurrentGamemode.Selected.name}}</name>
+						<div class="cell">
+							<map>Карта&emsp;<span style="color:white">{{CurrentGamemode.Selected.map}}</span></map>
+							<address><a ng-click='SetClipboardText()' style="color: #BDFF00;">{{CurrentGamemode.Selected.address}}</a></address>
+							<player>Игроки&emsp;<span style="color:white">{{CurrentGamemode.Selected.players}} из {{CurrentGamemode.Selected.maxplayers}}</span></player>
+						</div>
+
+						<players>
+							<table style="font-size: 16px;color: #FFFFFF; padding: 8px; width: 100%;">
+								<tr ng-repeat="player in CurrentGamemode.Selected.playerlist|orderBy:'time'">
+									<td class="pname" style="color: white;">{{player.name}}</td>
+									<td style="text-align: right;margin-right: 25px;color: white;" ng-Seconds="player.time"></td>
+								</tr>
+							</table>
+						</players>
+					</header>
+
+					<footer>
+						<div class="foot">
+							<input type='password' ng-model="CurrentGamemode.Selected.password" ng-show="CurrentGamemode.Selected.pass" ui-keypress="{'enter':'JoinServer( CurrentGamemode.Selected )'}" placeholder="Password" />
+
+							<a class="btn-pr" style="color: #FF4B55;background: rgb(255 75 85 / 12%);" ng-click="CurrentGamemode.Selected = ''" href="">
+								ЗАКРЫТЬ МЕНЮ
+							</a>
+
+							<a class="btn-pr" style="color: #000000;background: #BDFF00;" ng-click="JoinServer( CurrentGamemode.Selected )" href="">
+								ПОДКЛЮЧИТЬСЯ
+							</a>
+						</div>
+					</footer>
+
+				</div>
+			</div>
+
+		</div>
+
+		<div class="innerpage" ng-show="!!TopServers">
+
+			<h1 class="menuheader" ng-hide="!!TopServers">
+				<img style="margin-right: 7px;" src='img/info.png'/>
+				<span>Выберите режим игры из списка ниже</span>
+			</h1>
+
+			<div class='server_gamemodes scrollable' style="background: 0;">
+				
+				<div ng-repeat="project in InfoProject['projects']" class='server'>
+					<div class='header'>
+						<img src="{{ project['logo'] }}">
+						<div class='header2'>
+							<div class='header3'>
+								<span style="font-weight: 700;font-size: 32px;color: #FFA800;">{{ project.niceName }}</span>
+								<div class="category">
+									<span style="font-weight: 600;font-size: 16px;color: #FFFFFF;padding: 5px;">Ролевая игра</span>
+								</div>
+							</div>
+							<span style="font-weight: bold;font-size: 14px;color: #FFFFFF;">DarkRP сервер на котором играют прямо сейчас {{SumOnline(project)}} игроков на {{project.servers.length}} серверах</span>
+						</div>
+					</div>
+					<div class='footer'>
+						<div class='server_item' ng-repeat="server in project.servers">
+							<span style="font-weight: 700;font-size: 16px;color: #FFFFFF;"> {{ project.niceName }} #{{$index+1}}</span>
+							<div class='body'>
+								<img ng-src="https://muviproject.net/img/map/{{server.map}}.png">
+								<div class='server_item_info'>
+									<img style="margin-left: 12px;width: 24px; height: 24px;" src="img/users.png">	
+									<span style="font-weight: 700;font-size: 16px;color: #FFFFFF;">{{server.players}}</span>
+									<div class="join" ng-click="ConnectServer(server.ip)">
+										<img src="img/playsrv.png">	
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
