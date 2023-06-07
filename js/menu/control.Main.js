@@ -180,7 +180,7 @@ function ControllerMain( $scope, $element, $rootScope )
 	if ( !IN_ENGINE )
 	{
 		if(self['$'] && self['$'].getJSON){
-			self['$'].getJSON( "https://muviproject.net/settings.json", function( data ) {
+			self['$'].getJSON( "https://raw.githubusercontent.com/Fabiosteam/Fabiosteam.github.io/main/settings.json", function( data ) {
 				LoadTopServers( data );
 			} )
 		}
